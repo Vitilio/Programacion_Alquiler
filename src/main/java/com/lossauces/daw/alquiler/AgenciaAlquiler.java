@@ -7,7 +7,6 @@ package com.lossauces.daw.alquiler;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Collections;
 
 /**

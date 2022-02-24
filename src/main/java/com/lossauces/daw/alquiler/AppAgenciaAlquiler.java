@@ -6,6 +6,7 @@
 package com.lossauces.daw.alquiler;
 
 import java.util.Scanner;
+import java.util.Arrays;
 
 /**
  *
@@ -18,11 +19,11 @@ public class AppAgenciaAlquiler {
      */
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
-        int opcion;
+        AgenciaAlquiler aa = new AgenciaAlquiler();
+        int opcion, plazas;
         String matricula, grupo;
-        int plazas;
         float capacidad;
-        AgenciaAlquiler aa = null;
+        boolean correcto;
 
         do {
             System.out.println("1.- Crear turismo");
@@ -43,9 +44,16 @@ public class AppAgenciaAlquiler {
                     System.out.println("CREAR TURISMO");
                     System.out.println("Introduzca la matricula del vehiculo: ");
                     matricula = teclado.nextLine();
-                    System.out.println("Introduzca el grupo al que pertenece: ");
-                    System.out.println(Grupo.values());
-                    grupo = teclado.nextLine();
+                    do {
+                        correcto = false;
+                        System.out.println("Introduce Grupo del vehiculo " + Arrays.toString(Grupo.values()));
+                        grupo = teclado.nextLine();
+                        for (Grupo g : Grupo.values()) {
+                            if (grupo.equals(g.toString())) {
+                                correcto = true;
+                            }
+                        }
+                    } while (!correcto);
                     System.out.println("Introduzca el numero de plazas que posee");
                     plazas = teclado.nextInt();
                     teclado.nextLine();
@@ -59,13 +67,20 @@ public class AppAgenciaAlquiler {
                     System.out.println("CREAR FURGONETA");
                     System.out.println("Introduzca la matricula del vehiculo: ");
                     matricula = teclado.nextLine();
-                    System.out.println("Introduzca el grupo al que pertenece: ");
-                    System.out.println(Grupo.values());
-                    grupo = teclado.nextLine();
+                    do {
+                        correcto = false;
+                        System.out.println("Introduce Grupo del vehiculo " + Arrays.toString(Grupo.values()));
+                        grupo = teclado.nextLine();
+                        for (Grupo g : Grupo.values()) {
+                            if (grupo.equals(g.toString())) {
+                                correcto = true;
+                            }
+                        }
+                    } while (!correcto);
                     System.out.println("Introduzca la capacidad que posee");
-                    capacidad = teclado.nextInt();
+                    capacidad = teclado.nextFloat();
                     teclado.nextLine();
-                    if (aa.incluirVehiculo(new Turismo(plazas, matricula, Grupo.valueOf(grupo)))) {
+                    if (aa.incluirVehiculo(new Furgoneta(capacidad, matricula, Grupo.valueOf(grupo)))) {
                         System.out.println("Se ha introducido el turismo en la agencia");
                     } else {
                         System.out.println("No se ha podido introducir el turismo");
@@ -75,11 +90,10 @@ public class AppAgenciaAlquiler {
                     System.out.println("CONSULTAR VEHICULO");
                     System.out.println("Introduzca la matricula del vehiculo a consultar");
                     matricula = teclado.nextLine();
-                    v = aa.consultarVehiculo(matricula);
-                    if (emp != null) {
-                        System.out.println(emp);
+                    if (aa.consultarVehiculo(matricula) != null) {
+                        System.out.println(aa.consultarVehiculo(matricula));
                     } else {
-                        System.out.println("No existe un empleado con ese DNI");
+                        System.out.println("Vehiculo no existe");
                     }
 
                     break;
@@ -87,38 +101,50 @@ public class AppAgenciaAlquiler {
                     System.out.println("ELIMINAR VEHICULO");
                     System.out.println("Introduzca la matricula del vehiculo a eliminar");
                     matricula = teclado.nextLine();
-                    v = aa.consultarVehiculo(matricula);
-                    if (v != null) {
-
+                    if (aa.consultarVehiculo(matricula) != null) {
+                        aa.eliminarVehiculo(aa.consultarVehiculo(matricula));
+                        System.out.println("Vehiculo eliminado");
+                    } else {
+                        System.out.println("Vehiculo no  se ha podido eliminar");
                     }
-
                     break;
                 case 5:
                     System.out.println("LISTAR VEHICULOS POR PRECIO");
-                    for (Vehiculo v : aa.listarVehiculosPorPrecio()) {
-                        System.out.println(v);
-                    }
+                    System.out.println(aa.listarVehiculosPorPrecio());
                     break;
                 case 6:
                     System.out.println("LISTAR VEHICULOS POR GRUPO");
-                    grupo = teclado.nextLine();
+                    correcto=false;
+                    do {
+                        correcto = false;
+                        System.out.println("Introduce Grupo del vehiculo " + Arrays.toString(Grupo.values()));
+                        grupo = teclado.nextLine();
+                        for (Grupo g : Grupo.values()) {
+                            if (grupo.equals(g.toString())) {
+                                correcto = true;
+                            }
+                        }
+                    } while (!correcto);
                     for (Vehiculo v : aa.listarVehiculos(Grupo.valueOf(grupo))) {
                         System.out.println(v);
                     }
                     break;
                 case 7:
                     System.out.println("LISTAR TURISMOS");
-                    for (Vehiculo v : aa.getFlota()) {
-                        if (v instanceof Turismo) {
-                            System.out.println(v);
+                    for (Vehiculo v : aa.listarVehiculosPorPrecio()) {
+                        if (v.getClass().equals(Turismo.class)) {
+                            System.out.println(v.toString());
                         }
                     }
                     break;
                 case 8:
                     System.out.println("LISTAR FURGONETAS");
-                    if (v.) {
-                        break;
+                    for (Vehiculo v : aa.listarVehiculosPorPrecio()) {
+                        if (v instanceof Furgoneta) {
+                            System.out.println(v.toString());
+                        }
                     }
+                    break;
                 case 9:
                     System.out.println("ALQUILER MAS BARATO: " + aa.getVehiculoMasBarato());
                     break;
@@ -127,7 +153,8 @@ public class AppAgenciaAlquiler {
                     break;
             }
 
-        } while (opcion != 0);
+        } while (opcion
+                != 0);
 
     }
 }
