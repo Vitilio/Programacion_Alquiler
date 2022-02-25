@@ -16,7 +16,7 @@ public class Turismo extends Vehiculo {
     public Turismo() {
     }
 
-    public Turismo(int plazas, String matricula, Grupo grupo) {
+    public Turismo(int plazas, Matricula matricula, Grupo grupo) {
         super(matricula, grupo);
         this.plazas = plazas;
     }

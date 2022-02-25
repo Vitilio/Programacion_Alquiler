@@ -49,7 +49,7 @@ public class AgenciaAlquiler {
         return false;
     }
 
-    public Vehiculo consultarVehiculo(String matricula) {
+    public Vehiculo consultarVehiculo(Matricula matricula) {
         for (Vehiculo vehiculo : flota) {
             if(vehiculo.getMatricula().equals(matricula)){
                 return vehiculo;

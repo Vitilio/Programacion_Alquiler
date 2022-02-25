@@ -13,22 +13,22 @@ import java.util.Objects;
  */
 public abstract class Vehiculo implements Comparable<Vehiculo> {
 
-    private String matricula;
+    private Matricula matricula;
     private Grupo grupo;
 
     public Vehiculo() {
     }
     
-    public Vehiculo(String matricula, Grupo grupo) {
+    public Vehiculo(Matricula matricula, Grupo grupo) {
         this.matricula = matricula;
         this.grupo = grupo;
     }
 
-    public String getMatricula() {
+    public Matricula getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(String matricula) {
+    public void setMatricula(Matricula matricula) {
         this.matricula = matricula;
     }
 
