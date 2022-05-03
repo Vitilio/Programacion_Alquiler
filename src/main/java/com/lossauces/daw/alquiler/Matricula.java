@@ -5,6 +5,7 @@
  */
 package com.lossauces.daw.alquiler;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
  *
  * @author daw1
  */
-public class Matricula implements Comparable<Matricula>{
+public class Matricula implements Comparable<Matricula>,Serializable{
     private String valor;
 
     public Matricula() {
@@ -38,12 +39,18 @@ public class Matricula implements Comparable<Matricula>{
     }
 
     @Override
+    public String toString() {
+        return valor;
+    }
+    
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 23 * hash + Objects.hashCode(this.valor);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -62,6 +69,7 @@ public class Matricula implements Comparable<Matricula>{
         return true;
     }
     
+    @Override
     public int compareTo(Matricula o){
         return this.valor.compareTo(o.valor);
     }
@@ -71,7 +79,7 @@ public class Matricula implements Comparable<Matricula>{
     }
     
     public static boolean esValida(String matricula){
-        String patron="[0-9]{4}[A-Z&&[^QAEIOU]]{3}";
+        String patron="([0-9]{4})([A-Z&&[^QAEIOU]]{3})";
         Pattern p=Pattern.compile(patron);
         Matcher m=p.matcher(matricula);
         return m.matches();

@@ -16,7 +16,7 @@ public class Turismo extends Vehiculo {
     public Turismo() {
     }
 
-    public Turismo(int plazas, Matricula matricula, Grupo grupo) {
+    public Turismo(Matricula matricula, Grupo grupo, int plazas) {
         super(matricula, grupo);
         this.plazas = plazas;
     }

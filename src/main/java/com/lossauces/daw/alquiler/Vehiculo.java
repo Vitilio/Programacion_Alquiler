@@ -5,20 +5,21 @@
  */
 package com.lossauces.daw.alquiler;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author daw1
  */
-public abstract class Vehiculo implements Comparable<Vehiculo> {
+public abstract class Vehiculo implements Comparable<Vehiculo>,Serializable {
 
     private Matricula matricula;
     private Grupo grupo;
 
     public Vehiculo() {
     }
-    
+
     public Vehiculo(Matricula matricula, Grupo grupo) {
         this.matricula = matricula;
         this.grupo = grupo;
@@ -39,7 +40,7 @@ public abstract class Vehiculo implements Comparable<Vehiculo> {
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
-    
+
     @Override
     public String toString() {
         return matricula + "," + grupo;
@@ -63,22 +64,25 @@ public abstract class Vehiculo implements Comparable<Vehiculo> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Vehiculo other = (Vehiculo) obj;
-        if (!Objects.equals(this.matricula, other.matricula)) {
-            return false;
+        if (obj instanceof Vehiculo) {
+            final Vehiculo other = (Vehiculo) obj;
+            if (!Objects.equals(this.matricula, other.matricula)) {
+                return true;
+            }
         }
-        return true;
+
+        return false;
     }
 
     @Override
-    public int compareTo(Vehiculo v){
+    public int compareTo(Vehiculo v) {
         return this.matricula.compareTo(v.matricula);
     }
-    
+
     public abstract float getPrecioAlquiler();
-    
-    public float getPrecioAlquiler(int dias){
-        return getPrecioAlquiler()*dias;
+
+    public float getPrecioAlquiler(int dias) {
+        return getPrecioAlquiler() * dias;
     }
-    
+
 }

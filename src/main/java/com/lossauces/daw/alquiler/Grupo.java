@@ -10,8 +10,8 @@ package com.lossauces.daw.alquiler;
  * @author daw1
  */
 public enum Grupo {
-    A (50,1.5F,5),B (55,2,10),C (60,2.5F,15);
-    
+    A(50, 1.5F, 5), B(55, 2, 10), C(60, 2.5F, 15);
+
     private int base;
     private float variableTurismo;
     private int variableFurgoneta;
@@ -26,25 +26,11 @@ public enum Grupo {
         return base;
     }
 
-    public void setBase(int base) {
-        this.base = base;
-    }
-
     public float getVariableTurismo() {
         return variableTurismo;
-    }
-
-    public void setVariableTurismo(float variableTurismo) {
-        this.variableTurismo = variableTurismo;
     }
 
     public int getVariableFurgoneta() {
         return variableFurgoneta;
     }
-
-    public void setVariableFurgoneta(int variableFurgoneta) {
-        this.variableFurgoneta = variableFurgoneta;
-    }
-    
-    
 }

@@ -17,13 +17,10 @@ public class AgenciaAlquiler {
 
     private String nombre;
     private List<Vehiculo> flota;
+    private VehiculoDao vehiculoDao;
 
     public AgenciaAlquiler() {
-    }
-
-    public AgenciaAlquiler(String nombre, List<Vehiculo> flota) {
-        this.nombre = nombre;
-        this.flota = flota;
+        flota = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -51,46 +48,57 @@ public class AgenciaAlquiler {
 
     public Vehiculo consultarVehiculo(Matricula matricula) {
         for (Vehiculo vehiculo : flota) {
-            if(vehiculo.getMatricula().equals(matricula)){
+            if (vehiculo.getMatricula().equals(matricula)) {
                 return vehiculo;
             }
         }
-        /*
-            ListIterator<Vehiculo> li=flota.listIterator();
-            while(li.hasNext()){
-                salida=li.next();
-                if(salida.getMatricula().equals(matricula)){
-                    retutn salida
-                }
-            }
-            return null;
-        
-        */
         return null;
     }
 
     public boolean eliminarVehiculo(Vehiculo vehiculo) {
-        if (vehiculo != null){
+        if (vehiculo != null) {
             return flota.remove(vehiculo);
         }
         return false;
     }
-    
-    public List<Vehiculo> listarVehiculosPorPrecio(){
+
+    public List<Vehiculo> listarVehiculosPorPrecio() {
         List<Vehiculo> salida = new ArrayList<>(flota);
         Collections.sort(salida, new ComparadorPrecio());
         return salida;
     }
-    
-    public List<Vehiculo> listarVehiculos(Grupo grupo){
-        List<Vehiculo> salida = new ArrayList<>(flota);
-        Collections.sort(salida);
+
+    public List<Vehiculo> listarVehiculos(Grupo grupo) {
+        List<Vehiculo> salida = new ArrayList<>();
+        for (Vehiculo vehiculo : flota) {
+            if (vehiculo.getGrupo().equals(grupo)) {
+                salida.add(vehiculo);
+            }
+        }
         return salida;
     }
-    
-    public Vehiculo getVehiculoMasBarato(){
-        return Collections.min(flota, new ComparadorPrecio());   
+
+    public Vehiculo getVehiculoMasBarato() {
+        return Collections.min(flota, new ComparadorPrecio());
+    }
+
+    public int guardarVehiculos() throws DaoException {
+        if (vehiculoDao == null) {
+            throw new DaoException("No se ha establecido la extension de un archivo");
+        }
+        return vehiculoDao.insertar(new ArrayList<>(flota));
     }
     
-    
+    public int cargarVehiculos() throws DaoException{
+        if (vehiculoDao == null) {
+            throw new DaoException("No se ha establecido la extension de un archivo");
+        }
+        int n=0;
+        List<Vehiculo> listado = vehiculoDao.listar();
+        for (Vehiculo vehiculo : listado) {
+            if (incluirVehiculo(vehiculo)) {
+                return 
+            }
+        }
+    }
 }
